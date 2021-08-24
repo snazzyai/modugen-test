@@ -2,9 +2,9 @@ name: CI/CD Eslint and Docker build and push
 
 on:
   push:
-    branches: [ master ]
+    branches: [ staging ]
   pull_request:
-    branches: [ master ]
+    branches: [ staging ]
 
 jobs:
   build:
