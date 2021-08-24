@@ -30,5 +30,11 @@ jobs:
       - name: Run eslint formatting test
         run: npm run lint
 
-#      - name: Build docker image and push to docker registry
-#        run: npm run build
+      - name: Build docker image and push to docker registry
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: abdulsalamei/modugen-test
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
