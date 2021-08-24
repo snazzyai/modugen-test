@@ -1,37 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import * as THREE from "three";
-import Polygon from "../components/Polygon";
+import React, { useEffect, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
 import {
   OrbitControls,
   OrthographicCamera,
-  PerspectiveCamera
-} from "@react-three/drei";
-import Points from "../polygons.json";
-import { IPoint } from "../interfaces/IPoint";
-import Button from "./Button";
+  PerspectiveCamera,
+} from '@react-three/drei';
+import Polygon from './Polygon';
+import Points from '../polygons.json';
+import { IPoint } from '../interfaces/IPoint';
+import Button from './Button';
 
 const CanvasArea: React.FC<{}> = () => {
-  const [pointsOneArray, setPointsOneArray] = useState<Array<number> | null>(
-    null
+  const [pointsOneArray, setPointsOneArray] = useState<Array<number>>(
+    [],
   );
-  const [pointsTwoArray, setPointsTwoArray] = useState<Array<number> | null>(
-    null
+  const [pointsTwoArray, setPointsTwoArray] = useState<Array<number>>(
+    [],
   );
   const [isOrthographic, setIsOrthographic] = useState<boolean>(false);
 
-  function drawRectangleMode(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
+  function drawRectangleMode() {
     setIsOrthographic(true);
   }
 
-  function backToGlobal(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function backToGlobal() {
     setIsOrthographic(false);
   }
 
   const pushPoints = (bounding_point: IPoint[]): Array<number> => {
-    let arrayOfPoints: Array<number> = [];
+    const arrayOfPoints: Array<number> = [];
     bounding_point?.map((point: IPoint): boolean => {
       arrayOfPoints.push(point.x);
       arrayOfPoints.push(point.y);
@@ -51,7 +49,7 @@ const CanvasArea: React.FC<{}> = () => {
       <Canvas
         camera={{
           zoom: 20,
-          position: [5, 0, 100]
+          position: [5, 0, 100],
         }}
       >
         <PerspectiveCamera
@@ -66,31 +64,27 @@ const CanvasArea: React.FC<{}> = () => {
           makeDefault={isOrthographic}
         />
         <OrbitControls
-          enablePan={true}
-          enableZoom={true}
-          enableRotate={true}
+          enablePan
+          enableZoom
+          enableRotate
           enabled={!isOrthographic}
         />
         <Polygon
           position={new THREE.Vector3(-3, -2, -3)}
-          vertices={pointsTwoArray!}
+          vertices={pointsTwoArray}
         />
         <Polygon
           position={new THREE.Vector3(0, -2, -4)}
-          vertices={pointsOneArray!}
+          vertices={pointsOneArray}
         />
       </Canvas>
       <div>
         <Button
-          handleClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-            drawRectangleMode(e)
-          }
+          handleClick={() => drawRectangleMode()}
           text="Draw Rectangle"
         />
         <Button
-          handleClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-            backToGlobal(e)
-          }
+          handleClick={() => backToGlobal()}
           text="Back to Global"
         />
       </div>
