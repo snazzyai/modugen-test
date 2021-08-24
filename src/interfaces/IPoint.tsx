@@ -4,6 +4,6 @@ export interface IPoint {
   z: number;
 }
 
-export interface IPolygon {
-  bounding_points: IPoint[];
-}
+// export interface IPolygon {
+//   bounding_points: IPoint[];
+// }
